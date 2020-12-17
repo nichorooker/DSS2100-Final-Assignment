@@ -2,16 +2,6 @@ import numpy as np
 import pandas as pd
 
 
-def bs_replicate_1d(data, func):
-    """Generate bootstrap replicate of data"""
-
-    # Generate random sample from data of same length as the data
-    bs_sample = np.random.choice(data, len(data))
-    
-    # Return random sample under specified function
-    return func(bs_sample)
-
-
 def draw_bs_reps(data, func, size=1):
     """Draw specified number of bootstrap replicates"""
 
@@ -20,7 +10,9 @@ def draw_bs_reps(data, func, size=1):
 
     # Generate replicates and store them to the array
     for i in range(size):
-        bs_replicates[i] = bs_replicate_1d(data, func)
+        
+    # Generate random sample from data of same length as the data and place random samples as an index for  bs_replicates
+        bs_replicates[i] = func(np.random.choice(data, len(data)))
         
     return bs_replicates
 
